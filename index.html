@@ -483,10 +483,11 @@ const GEST={encouraging:{cue:'nod'},excited:{cue:'wing_flap',repeat:1},celebrati
 let owl=null, body=null;
 try{ const cfg=JSON.parse(document.getElementById('owlcfg').textContent); const P=window.NuriOwlPreview;
   owl=new P.OwlRenderer($('eyeL'),$('eyeR'),cfg); body=new P.OwlBody({head:$('rhead'),wl:$('wl'),wr:$('wr'),fl:$('fl'),fr:$('fr')}); }catch(e){console.warn(e)}
+if(owl) owl.levelFn=()=> live ? (live.getOutputVolume ? live.getOutputVolume()*1.6 : 0.4) : clipLevel();
 function fit(){ const w=$('rwrap').clientWidth; $('rstage').style.transform=`scale(${w/560})`; }
 addEventListener('resize',fit); fit();
 new MutationObserver(()=>{const h=$('rhead'); const m=/translateY\(([-\d.]+)px\)/.exec(h.style.transform); const t=m?`translateY(${m[1]}px)`:''; if(h.style.transform!==t) h.style.transform=t;}).observe($('rhead'),{attributes:true,attributeFilter:['style']});
-function setOwl(m){ $('mood').textContent=MOODS[lang][m]||''; if(!owl) return; owl.setState(EYE[m]||'idle',1,250, m==='celebrating'?6000:0); if(GEST[m]) body.post(GEST[m]); }
+function setOwl(m){ $('mood').textContent=MOODS[lang][m]||''; if(!owl) return; owl.setState(EYE[m]||'idle',1,450, m==='celebrating'?6000:0); if(GEST[m]) body.post(GEST[m]); }
 function chips(){
   const c=$('chips'); c.innerHTML='';
   LESSONS[lang].forEach((l,i)=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=l.label; b.setAttribute('aria-pressed',i===cur);
@@ -494,22 +495,25 @@ function chips(){
 }
 function reset(){ $('chat').innerHTML=''; xp=120; $('xp').textContent='⭐ '+xp+' XP'; $('lessonTitle').textContent=LESSONS[lang][cur].title; setOwl('idle'); }
 const aud=new Audio(); aud.preload='auto';
+let actx=null, an=null, buf=null;
+function setupAnalyser(){ try{ if(actx) { actx.resume(); return; } actx=new (window.AudioContext||window.webkitAudioContext)(); const src=actx.createMediaElementSource(aud); an=actx.createAnalyser(); an.fftSize=512; buf=new Uint8Array(an.fftSize); src.connect(an); an.connect(actx.destination); }catch(e){ an=null; } }
+function clipLevel(){ if(!an||aud.paused) return 0; an.getByteTimeDomainData(buf); let sum=0; for(let i=0;i<buf.length;i++){ const d=(buf[i]-128)/128; sum+=d*d; } return Math.min(1, Math.sqrt(sum/buf.length)*4); }
 function clip(path){ return new Promise(res=>{ if(!sound) return res(); let done=false; const fin=()=>{ if(!done){done=true; res();} };
   aud.onended=fin; aud.onerror=fin; aud.src=path; const pr=aud.play(); if(pr&&pr.catch) pr.catch(fin); setTimeout(fin,12000); }); }
 function stopAudio(){ try{ aud.pause(); }catch(e){} }
-function unlockAudio(){ try{ aud.muted=true; aud.src=`assets/voice/${lang}-${LESSONS[lang][cur].id}-0.mp3`; const p=aud.play(); const done=()=>{aud.pause(); aud.currentTime=0; aud.muted=false;}; if(p&&p.then) p.then(done).catch(()=>{aud.muted=false}); else done(); }catch(e){} }
+function unlockAudio(){ setupAnalyser(); try{ aud.muted=true; aud.src=`assets/voice/${lang}-${LESSONS[lang][cur].id}-0.mp3`; const p=aud.play(); const done=()=>{aud.pause(); aud.currentTime=0; aud.muted=false;}; if(p&&p.then) p.then(done).catch(()=>{aud.muted=false}); else done(); }catch(e){} }
 async function play(){
   const my=++run; stopAudio(); if(live) return; reset();
   const L=LESSONS[lang][cur], who={en:['Nuri','Layla, 7'],ar:['نوري','ليلى، ٧ سنوات']}[lang]; let k=0;
   for(const [s,mood,text,gain] of L.lines){
     if(my!==run) return;
     const chat=$('chat');
-    if(s==='n'){ setOwl('thinking'); const t=document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>'; chat.appendChild(t); chat.scrollTop=chat.scrollHeight; await sleep(800); if(my!==run) return; t.remove(); setOwl(mood); }
+    if(s==='n'){ const t=document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>'; chat.appendChild(t); chat.scrollTop=chat.scrollHeight; await sleep(800); if(my!==run) return; t.remove(); setOwl(mood); }
     else { setOwl('listening'); await sleep(900); }
     addMsg(s==='n'?'nuri':'kid', s==='n'?who[0]:who[1], text);
     if(gain){ xp+=gain; $('xp').textContent='⭐ '+xp+' XP'; $('xp').classList.add('pop'); setTimeout(()=>$('xp').classList.remove('pop'),300);
       const n=document.createElement('div'); n.className='msg note'; n.textContent= lang==='ar'?`+${gain} نجمة · النجوم تزيد ولا تنقص أبداً`:`+${gain} XP · stars only ever go up`; chat.appendChild(n); chat.scrollTop=chat.scrollHeight; }
-    if(s==='n'){ const path=`assets/voice/${lang}-${L.id}-${k++}.mp3`; if(sound){ if(owl) owl.setState('speaking',1,200); await clip(path); if(my!==run) return; if(owl) owl.setState(EYE[mood]||'idle',1,250); await sleep(300);} else await sleep(1600); }
+    if(s==='n'){ const path=`assets/voice/${lang}-${L.id}-${k++}.mp3`; if(sound){ if(owl) owl.setState('speaking',1,350); await clip(path); if(my!==run) return; if(owl) owl.setState(EYE[mood]||'idle',1,450); await sleep(300);} else await sleep(1600); }
     else await sleep(900);
   }
 }
@@ -522,7 +526,7 @@ $('sound').onclick=()=>{ sound=!sound; setSoundLabel(); if(sound){ unlockAudio()
 
 /* ---------- Live talk with Nuri (ElevenLabs voice agent) ---------- */
 const AGENT_ID='agent_9901m6qz4s8qe1dtkazyh063jwx5';
-let live=null, liveTimer=null;
+let live=null, liveTimer=null, modeT=null;
 function liveUI(on, statusEn, statusAr){
   $('talk').querySelector('.en').textContent= on?'■ End conversation':'🎙️ Talk to Nuri live';
   $('talk').querySelector('.ar').textContent= on?'■ إنهاء المحادثة':'🎙️ كلّم نوري مباشرة';
@@ -540,7 +544,7 @@ async function startLive(){
       agentId: AGENT_ID, connectionType:'webrtc',
       overrides:{ agent:{ language: lang } },
       onConnect:()=>{ liveUI(true,'Connected. Say hello! (2 minutes max)','متصل. قول أهلاً! (دقيقتان كحد أقصى)'); if(body) body.post({cue:'wing_flap',repeat:2}); },
-      onModeChange:({mode})=>{ if(!owl) return; if(mode==='speaking'){ owl.setState('speaking',1,150); $('mood').textContent=MOODS[lang].talking; } else { owl.setState('listening',1,150); $('mood').textContent=MOODS[lang].listening; } },
+      onModeChange:({mode})=>{ if(!owl) return; clearTimeout(modeT); if(mode==='speaking'){ if(owl.state!=='speaking'){ owl.setState('speaking',1,350); $('mood').textContent=MOODS[lang].talking; } } else { modeT=setTimeout(()=>{ owl.setState('listening',1,450); $('mood').textContent=MOODS[lang].listening; },700); } },
       onMessage:({source,message})=>{ if(!message) return; addMsg(source==='ai'?'nuri':'kid', source==='ai'?(lang==='ar'?'نوري':'Nuri'):(lang==='ar'?'أنت':'You'), message); },
       onDisconnect:()=>endLive(true),
       onError:(e)=>{ console.warn(e); }

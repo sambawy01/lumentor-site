@@ -99,10 +99,15 @@
       if (now >= this.nudgeUntil) { this.nudgeX = 0; this.nudgeY = 0; }
       const gn = 1 - Math.exp(-dt / 0.06);
       this.gx += (this.sx + this.nudgeX - this.gx) * gn; this.gy += (this.sy + this.nudgeY - this.gy) * gn;
-      this.pulse = sp.pulse.hz > 0 ? L.pulseAmp * Math.sin(2 * Math.PI * sp.pulse.hz * this.t) : 0;
+      // Website change: no fixed 5 Hz flashing. While speaking, the glow follows the real voice level
+      // (smoothed), so it swells with words and rests in pauses. Without a level it breathes slowly.
+      if (this.levelFn && this._eff() === 'speaking') {
+        const v = clamp(this.levelFn() || 0, 0, 1); this.lvl = (this.lvl || 0) + (v - (this.lvl || 0)) * (1 - Math.exp(-dt / 0.09));
+        this.pulse = this.lvl * 0.055;
+      } else { this.lvl = 0; this.pulse = sp.pulse.hz > 0 ? 0.012 * Math.sin(2 * Math.PI * 0.6 * this.t) : 0; }
       this.bounce = sp.bounce.hz > 0 ? -L.bounce * Math.abs(Math.sin(Math.PI * sp.bounce.hz * this.t)) : 0;
       this.rot = (this.rot + sp.rotate_hz * 360 * dt) % 360;
-      this.flash = sp.sparkle ? 0.3 * Math.sin(this.t * 9) : 0;
+      this.flash = sp.sparkle ? 0.07 * Math.sin(this.t * 2.4) : 0;   // website: gentle shimmer, not a strobe
       this.draw(0); this.draw(1);
       requestAnimationFrame(this._loop);
     }
