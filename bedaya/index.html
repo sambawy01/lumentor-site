@@ -32,6 +32,10 @@ nav{background:rgba(244,231,211,.94)}
 .letter b{font-family:"Baloo Bhaijaan 2";font-weight:800;font-size:clamp(150px,22vw,220px);line-height:1;color:var(--deep);transition:transform .35s}
 .letter b.pop{transform:scale(1.15)}
 .letter small{position:absolute;bottom:14px;font-weight:700;font-size:17px;color:var(--clay)}
+.pick{display:flex;gap:10px;background:var(--deep2);padding:6px;border-radius:99px;border:3px solid var(--line)}
+.pick button{-webkit-appearance:none;border:0;border-radius:99px;padding:10px 22px;font:700 20px "IBM Plex Sans Arabic";background:transparent;color:var(--sand);cursor:pointer;display:flex;align-items:center;gap:8px}
+.pick button[aria-pressed=true]{background:var(--sand2);color:var(--deep)}
+.pick button:disabled{opacity:.5}
 .micwrap{position:relative;width:150px;height:150px;margin-top:6px}
 .halo{position:absolute;inset:0;border-radius:50%;background:var(--leaf);opacity:.35;transform:scale(1);transition:transform .08s linear}
 .halo.h2{background:var(--clay);opacity:.25}
@@ -85,6 +89,10 @@ nav{background:rgba(244,231,211,.94)}
     </div>
     <div class="stage">
       <div class="letter" aria-live="polite"><b id="glyph">ب</b><small id="glyphName"><span class="en">your first letter</span><span class="ar">أول حرف</span></small></div>
+      <div class="pick" role="group" aria-label="Teacher voice">
+        <button id="tF" aria-pressed="true"><span aria-hidden="true">👩🏽‍🏫</span><span class="ar">مدرّسة</span><span class="en">Woman teacher</span></button>
+        <button id="tM" aria-pressed="false"><span aria-hidden="true">👨🏽‍🏫</span><span class="ar">مدرّس</span><span class="en">Man teacher</span></button>
+      </div>
       <div class="micwrap"><div class="halo" id="haloOut"></div><div class="halo h2" id="haloIn"></div>
         <button class="micbtn" id="mic" aria-label="Talk to Bedaya">🎙️</button></div>
       <div class="miclabel" id="micLabel"><span class="ar">اضغط واتكلّم</span><span class="en">Tap and talk</span></div>
@@ -169,9 +177,13 @@ function spotLetter(t){ const m=t.match(/حرف\s+([ء-ي]+)/); if(!m) return; c
 
 /* ---- live voice with the Bedaya agent ---- */
 const AGENT='agent_4101m6r4qm95e2h9nx2xa35nqzxr';
+const VOICES={ female:'mS4cERRqrNy5Kmlx8Udf' /* Sawsan */, male:'jpmzWsrGMTnSHjVCQIrU' /* Mimmo */ };
+let teacher='female'; try{ teacher=localStorage.getItem('bedaya-teacher')||'female'; }catch(e){}
+function setTeacher(t){ teacher=t; $('tF').setAttribute('aria-pressed',t==='female'); $('tM').setAttribute('aria-pressed',t==='male'); try{localStorage.setItem('bedaya-teacher',t)}catch(e){} }
+$('tF').onclick=()=>{ if(!live) setTeacher('female'); }; $('tM').onclick=()=>{ if(!live) setTeacher('male'); }; setTeacher(teacher);
 let live=null, busy=false, sdk=null, timer=null, raf=0;
 function setStatus(ar,en){ $('status').textContent= lang==='ar'?(ar||''):(en||''); }
-function ui(on){ $('mic').classList.toggle('on',on); $('mic').textContent= on?'■':'🎙️'; $('mic').setAttribute('aria-label',on?'End':'Talk to Bedaya');
+function ui(on){ $('tF').disabled=on; $('tM').disabled=on; $('mic').classList.toggle('on',on); $('mic').textContent= on?'■':'🎙️'; $('mic').setAttribute('aria-label',on?'End':'Talk to Bedaya');
   $('micLabel').innerHTML= on?'<span class="ar">اضغط عشان تنهي</span><span class="en">Tap to end</span>':'<span class="ar">اضغط واتكلّم</span><span class="en">Tap and talk</span>'; }
 function clean(t){ return (t||'').replace(/\[[^\]]{1,30}\]\s*/g,'').trim(); }
 function pulse(){ if(!live){ $('haloOut').style.transform='scale(1)'; $('haloIn').style.transform='scale(1)'; return; }
@@ -186,7 +198,7 @@ async function start(){
     setStatus('بنتصل ببداية…','Connecting to Bedaya…');
     if(!sdk) sdk=await import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.35.0/+esm');
     let connected=false;
-    live=await sdk.Conversation.startSession({ agentId:AGENT, connectionType:'websocket', overrides:{agent:{language:'ar'}},
+    live=await sdk.Conversation.startSession({ agentId:AGENT, connectionType:'websocket', overrides:{agent:{language:'ar'}, tts:{voiceId:VOICES[teacher]}}, dynamicVariables:{teacher},
       onConnect:()=>{ connected=true; ui(true); $('mic').disabled=false; setStatus('اتكلّم براحتك… بداية سامعاك.','Go ahead and speak… Bedaya is listening.'); },
       onModeChange:({mode})=>{ if(live) setStatus(mode==='speaking'?'بداية بتتكلم…':'دورك… اتكلّم.', mode==='speaking'?'Bedaya is speaking…':'Your turn… speak.'); },
       onMessage:({source,message})=>{ const t=clean(message); if(!t||t==='...') return; if(source==='ai'){ $('caption').textContent=t; spotLetter(t); } else { const me=document.createElement('span'); me.className='me'; me.textContent=(lang==='ar'?'إنت: ':'You: ')+t; $('caption').appendChild(me); } },
