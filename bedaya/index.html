@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بداية — اتعلّم القراية بالصوت · Bedaya by Lumentor</title>
+<meta name="description" content="Bedaya teaches adults who never learned to read and write, by voice, one letter a day. Built for Egypt, Africa and the Arab world.">
+<meta property="og:title" content="بداية — Bedaya">
+<meta property="og:description" content="اتعلّم القراية والكتابة بالصوت، حرف كل يوم. Learn to read and write by voice.">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+:root{ --sand:#F4E7D3; --sand2:#FBF4E8; --deep:#0B4F4A; --deep2:#073834; --clay:#C2562B; --leaf:#7BC4A4; }
+body{background:var(--sand)}
+nav{background:rgba(244,231,211,.94)}
+.brand .dot{background:conic-gradient(var(--leaf),var(--deep),var(--clay),var(--leaf))}
+.btn.primary{background:var(--clay)}
+.eyebrow{color:var(--clay)}
+
+/* voice hero */
+.vhero{background:var(--deep);color:var(--sand);padding:56px 0 64px;border-bottom:3px solid var(--line)}
+.vhero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.vhero .kicker{background:var(--leaf)}
+.vhero h1{font-size:clamp(50px,7vw,96px);font-weight:800}
+.vhero h1 .hl{color:var(--leaf)}
+.vhero p.lead{font-size:clamp(21px,2.2vw,27px);margin:20px 0 0;max-width:30ch;font-weight:500;color:#F4E7D3}
+.stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+.letter{width:min(300px,70vw);aspect-ratio:1;border-radius:40px;background:var(--sand2);border:4px solid var(--line);box-shadow:10px 10px 0 var(--deep2);display:flex;align-items:center;justify-content:center;position:relative}
+.letter b{font-family:"Baloo Bhaijaan 2";font-weight:800;font-size:clamp(150px,22vw,220px);line-height:1;color:var(--deep);transition:transform .35s}
+.letter b.pop{transform:scale(1.15)}
+.letter small{position:absolute;bottom:14px;font-weight:700;font-size:17px;color:var(--clay)}
+.micwrap{position:relative;width:150px;height:150px;margin-top:6px}
+.halo{position:absolute;inset:0;border-radius:50%;background:var(--leaf);opacity:.35;transform:scale(1);transition:transform .08s linear}
+.halo.h2{background:var(--clay);opacity:.25}
+.micbtn{position:absolute;inset:14px;border-radius:50%;border:4px solid var(--line);background:var(--clay);color:#fff;font-size:52px;cursor:pointer;box-shadow:6px 6px 0 var(--deep2);display:flex;align-items:center;justify-content:center}
+.micbtn.on{background:var(--sand2);color:var(--deep)}
+.micbtn:disabled{opacity:.6}
+.miclabel{font-family:"Baloo Bhaijaan 2";font-weight:800;font-size:clamp(28px,3vw,36px);text-align:center}
+.status{min-height:1.6em;font-weight:600;font-size:19px;text-align:center;color:var(--leaf);max-width:34ch}
+.caption{min-height:3.2em;max-width:30ch;text-align:center;font-size:clamp(22px,2.4vw,28px);font-weight:600;line-height:1.45}
+.caption .me{display:block;font-size:18px;opacity:.75;font-weight:500;margin-top:6px}
+.note{font-size:16px;opacity:.85;text-align:center;max-width:42ch}
+@media(max-width:900px){.vhero .wrap{grid-template-columns:1fr}.vhero{text-align:center}.vhero p.lead{margin-inline:auto}.vhero .stage{order:-1}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.step{background:var(--sand2);border:3px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:5px 5px 0 var(--line)}
+.step .n{width:46px;height:46px;border-radius:50%;background:var(--deep);color:var(--sand);display:flex;align-items:center;justify-content:center;font:800 24px "Baloo Bhaijaan 2";margin-bottom:12px}
+.step b{display:block;font-family:"Baloo Bhaijaan 2";font-size:26px;margin-bottom:4px}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}}
+.forwho{display:grid;grid-template-columns:1fr .7fr;gap:40px;align-items:center}
+.phone{width:min(300px,80%);margin:auto;border:6px solid var(--line);border-radius:38px;overflow:hidden;box-shadow:10px 10px 0 var(--deep);background:#fff}
+@media(max-width:900px){.forwho{grid-template-columns:1fr}}
+#why{background:var(--deep2)}
+#why .eyebrow{color:var(--leaf)}
+.stat .num{color:var(--leaf)!important}.stat:nth-child(2) .num{color:#FFB38A!important}
+#contact{background:var(--leaf)}
+</style>
+</head>
+<body class="ar">
+<nav>
+  <div class="wrap">
+    <a class="brand" href="../"><span class="dot"></span><span class="en">Bedaya</span><span class="ar">بداية</span></a>
+    <div class="navlinks">
+      <a href="#how"><span class="en">How it works</span><span class="ar">بتشتغل إزاي</span></a>
+      <a href="../nuri/"><span class="en">Nuri (children) →</span><span class="ar">نوري (للأطفال) ←</span></a>
+      <a href="#contact"><span class="en">Contact</span><span class="ar">تواصل معنا</span></a>
+      <button class="lang" id="langBtn" aria-label="Switch language">English</button>
+    </div>
+  </div>
+</nav>
+
+<header class="vhero">
+  <div class="wrap">
+    <div>
+      <span class="kicker"><span class="en">Bedaya · by Lumentor · for adults</span><span class="ar">بداية · من Lumentor · للكبار</span></span>
+      <h1 class="ar">اتعلّم تقرا<br><span class="hl">بصوتك.</span></h1>
+      <h1 class="en">Learn to read,<br><span class="hl">by voice.</span></h1>
+      <p class="lead ar">مش محتاج تعرف تقرا عشان تبدأ. اضغط على الميكروفون واتكلّم مع بداية، وهي هتعلّمك أول حرف دلوقتي.</p>
+      <p class="lead en">You don't need to read to start. Tap the microphone and talk to Bedaya. She teaches your first letter right now, in Egyptian Arabic.</p>
+    </div>
+    <div class="stage">
+      <div class="letter" aria-live="polite"><b id="glyph">ب</b><small id="glyphName"><span class="en">your first letter</span><span class="ar">أول حرف</span></small></div>
+      <div class="micwrap"><div class="halo" id="haloOut"></div><div class="halo h2" id="haloIn"></div>
+        <button class="micbtn" id="mic" aria-label="Talk to Bedaya">🎙️</button></div>
+      <div class="miclabel" id="micLabel"><span class="ar">اضغط واتكلّم</span><span class="en">Tap and talk</span></div>
+      <div class="status" id="status"></div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <p class="note"><span class="ar">عرض مجاني لمدة دقيقتين. بيستخدم الميكروفون ومفيش تسجيل. متقولش بيانات شخصية.</span><span class="en">A free 2‑minute demo. It uses your microphone and nothing is recorded. Please don't share personal details. Bedaya speaks Arabic.</span></p>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow"><span class="en">10 minutes a day</span><span class="ar">١٠ دقايق في اليوم</span></div>
+    <h2 class="ar">حرف واحد كل يوم.</h2>
+    <h2 class="en">One letter a day.</h2>
+    <p class="sub ar">كل جلسة قصيرة وبسيطة، وبتخلص وإنت قريت حاجة بنفسك.</p>
+    <p class="sub en">Every session is short and simple, and it ends with you reading something yourself.</p>
+    <div class="steps">
+      <div class="step"><div class="n">١</div><b class="ar">مراجعة</b><b class="en">Warm up</b><span class="ar">نسمع الحروف اللي اتعلمتها قبل كده.</span><span class="en">Hear the letters you already know.</span></div>
+      <div class="step"><div class="n">٢</div><b class="ar">حرف جديد</b><b class="en">A new sound</b><span class="ar">صوت الحرف، وكلمات من حياتك: باب، بيت، بنت.</span><span class="en">The letter's sound, with everyday words: door, house, girl.</span></div>
+      <div class="step"><div class="n">٣</div><b class="ar">اكتبه</b><b class="en">Trace it</b><span class="ar">ترسم الحرف بصباعك على الشاشة. الرسم بيفضل على تليفونك.</span><span class="en">Draw it with your finger. Your writing stays on your phone.</span></div>
+      <div class="step"><div class="n">٤</div><b class="ar">اقرا</b><b class="en">Read it</b><span class="ar">كلمات وقصص قصيرة من الحروف اللي تعرفها بس.</span><span class="en">Words and short stories made only from letters you know.</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--sand2);border-block:3px solid var(--line)">
+  <div class="wrap forwho">
+    <div>
+      <div class="eyebrow"><span class="en">Who it's for</span><span class="ar">لمين</span></div>
+      <h2 class="ar">للي فاتته فرصة المدرسة.</h2>
+      <h2 class="en">For everyone who missed school.</h2>
+      <ul class="ticks ar"><li>تقرا لافتة الأتوبيس واسم الشارع</li><li>تعرف السعر والفاتورة لوحدك</li><li>تقرا علبة الدوا وورق الشغل</li><li>تساعد ولادك في المذاكرة</li></ul>
+      <ul class="ticks en"><li>Read the bus sign and the street name</li><li>Check a price or a bill on your own</li><li>Read a medicine box or a work form</li><li>Help your children with their homework</li></ul>
+      <p class="sub" style="margin-top:22px"><span class="ar">بيشتغل على أي تليفون رخيص، من المتصفح، من غير متجر تطبيقات. ومفيش أي محتوى ديني أو سياسي: قراية وكتابة بس.</span><span class="en">Works on any cheap phone, in the browser, with no app store. No religious or political content: reading and writing only.</span></p>
+    </div>
+    <div class="phone"><img src="../assets/bedaya-m.webp" alt="Bedaya app: a large letter and a listen button"></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow"><span class="en">Why it matters</span><span class="ar">ليه ده مهم</span></div>
+    <h2 class="en">Millions are still waiting to read.</h2>
+    <h2 class="ar">ملايين لسه مستنيين يقروا.</h2>
+    <div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div class="stat"><div class="num">~70M</div><p class="en">adults in Arab countries cannot read or write; about 62% are women.</p><p class="ar">بالغ في الدول العربية لا يقرؤون ولا يكتبون، نحو ٦٢٪ منهم نساء.</p><small>ALECSO Observatory, 2020</small></div>
+      <div class="stat"><div class="num">16.6%</div><p class="en">of Egyptians aged 10 and over cannot read or write.</p><p class="ar">من المصريين في سن ١٠ سنوات فأكثر لا يقرؤون ولا يكتبون.</p><small>CAPMAS, 2024</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2 class="ar">عايز تجيب بداية لبرنامجك؟</h2>
+    <h2 class="en">Bring Bedaya to your programme.</h2>
+    <p class="sub ar">جمعيات محو الأمية، والشركات، والوزارات، والمستثمرين: يسعدنا نعرض عليكم بداية.</p>
+    <p class="sub en">Literacy NGOs, employers, ministries and investors: we'd love to show you Bedaya.</p>
+    <div class="cta" style="margin-top:26px"><a class="btn primary" href="mailto:hello@lumentor.ai?subject=Bedaya%20demo%20request"><span class="en">Request a demo</span><span class="ar">اطلب عرض</span></a></div>
+    <div class="lines"><a href="mailto:hello@lumentor.ai">hello@lumentor.ai</a><a href="tel:+13022404282" dir="ltr">+1 302 240 4282</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Lumentor, Inc. · <span class="en">A Delaware corporation</span><span class="ar">شركة مسجّلة في ولاية ديلاوير</span></span>
+    <a href="../" style="text-decoration:none"><span class="en">← Lumentor home</span><span class="ar">→ الصفحة الرئيسية</span></a>
+  </div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let lang='ar';
+function setLang(l){ lang=l; document.body.classList.toggle('ar',l==='ar'); document.documentElement.lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr'; $('langBtn').textContent=l==='ar'?'English':'عربي'; try{localStorage.setItem('lumentor-lang',l)}catch(e){} if(!live) setStatus(''); }
+$('langBtn').onclick=()=>setLang(lang==='ar'?'en':'ar');
+
+/* ---- letter shown on the card, picked up from what Bedaya says ("حرف الباء") ---- */
+const LETTERS={'الألف':'ا','ألف':'ا','الباء':'ب','باء':'ب','التاء':'ت','الثاء':'ث','الجيم':'ج','الحاء':'ح','الخاء':'خ','الدال':'د','الذال':'ذ','الراء':'ر','الزاي':'ز','السين':'س','الشين':'ش','الصاد':'ص','الضاد':'ض','الطاء':'ط','الظاء':'ظ','العين':'ع','الغين':'غ','الفاء':'ف','القاف':'ق','الكاف':'ك','اللام':'ل','الميم':'م','ميم':'م','النون':'ن','نون':'ن','الهاء':'ه','الواو':'و','الياء':'ي','البا':'ب','التا':'ت','الرا':'ر','الها':'ه','اليا':'ي','الفا':'ف'};
+function spotLetter(t){ const m=t.match(/حرف\s+([ء-ي]+)/); if(!m) return; const g=LETTERS[m[1]]; if(!g||$('glyph').textContent===g) return;
+  $('glyph').textContent=g; $('glyphName').innerHTML='<span class="ar">حرف '+m[1].replace(/^ال/,'')+'</span><span class="en">letter '+m[1].replace(/^ال/,'')+'</span>';
+  $('glyph').classList.add('pop'); setTimeout(()=>$('glyph').classList.remove('pop'),400); }
+
+/* ---- live voice with the Bedaya agent ---- */
+const AGENT='agent_4101m6r4qm95e2h9nx2xa35nqzxr';
+let live=null, busy=false, sdk=null, timer=null, raf=0;
+function setStatus(ar,en){ $('status').textContent= lang==='ar'?(ar||''):(en||''); }
+function ui(on){ $('mic').classList.toggle('on',on); $('mic').textContent= on?'■':'🎙️'; $('mic').setAttribute('aria-label',on?'End':'Talk to Bedaya');
+  $('micLabel').innerHTML= on?'<span class="ar">اضغط عشان تنهي</span><span class="en">Tap to end</span>':'<span class="ar">اضغط واتكلّم</span><span class="en">Tap and talk</span>'; }
+function clean(t){ return (t||'').replace(/\[[^\]]{1,30}\]\s*/g,'').trim(); }
+function pulse(){ if(!live){ $('haloOut').style.transform='scale(1)'; $('haloIn').style.transform='scale(1)'; return; }
+  let o=0,i=0; try{ o=live.getOutputVolume()||0; i=live.getInputVolume()||0; }catch(e){}
+  $('haloOut').style.transform='scale('+(1+Math.min(o*1.4,.45))+')'; $('haloIn').style.transform='scale('+(1+Math.min(i*1.4,.35))+')'; raf=requestAnimationFrame(pulse); }
+async function start(){
+  if(busy) return; busy=true; $('mic').disabled=true; $('caption').textContent='';
+  setStatus('بنطلب الميكروفون… لو ظهرلك سؤال، اضغط «سماح».','Asking for the microphone… if a prompt appears, tap Allow.');
+  try{
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ const e=new Error('nomic'); e.name='NoMic'; throw e; }
+    const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}); s.getTracks().forEach(t=>t.stop());
+    setStatus('بنتصل ببداية…','Connecting to Bedaya…');
+    if(!sdk) sdk=await import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.35.0/+esm');
+    let connected=false;
+    live=await sdk.Conversation.startSession({ agentId:AGENT, connectionType:'websocket', overrides:{agent:{language:'ar'}},
+      onConnect:()=>{ connected=true; ui(true); $('mic').disabled=false; setStatus('اتكلّم براحتك… بداية سامعاك.','Go ahead and speak… Bedaya is listening.'); },
+      onModeChange:({mode})=>{ if(live) setStatus(mode==='speaking'?'بداية بتتكلم…':'دورك… اتكلّم.', mode==='speaking'?'Bedaya is speaking…':'Your turn… speak.'); },
+      onMessage:({source,message})=>{ const t=clean(message); if(!t||t==='...') return; if(source==='ai'){ $('caption').textContent=t; spotLetter(t); } else { const me=document.createElement('span'); me.className='me'; me.textContent=(lang==='ar'?'إنت: ':'You: ')+t; $('caption').appendChild(me); } },
+      onDisconnect:(d)=>{ stop(true, !connected || (d&&d.reason==='error')); },
+      onError:(m)=>console.warn('bedaya',m) });
+    timer=setTimeout(()=>stop(), 125000); busy=false; pulse();
+  }catch(e){
+    console.warn(e); live=null; busy=false; $('mic').disabled=false; ui(false);
+    if(e.name==='NoMic') setStatus('المتصفح ده مش بيسمح بالميكروفون. افتح lumentor.ai/bedaya في Safari أو Chrome.','This browser can\'t use the microphone. Open lumentor.ai/bedaya in Safari or Chrome.');
+    else if(e.name==='NotAllowedError'||e.name==='SecurityError') setStatus('الميكروفون مقفول. اضغط على القفل أو «aA» جنب العنوان، واسمح بالميكروفون، وجرّب تاني.','Microphone blocked. Tap the lock or "aA" by the address, allow the microphone, and try again.');
+    else setStatus('مقدرناش نتصل دلوقتي. جرّب تاني بعد دقيقة.','Could not connect right now. Please try again in a minute.');
+  }
+}
+async function stop(fromServer, failed){
+  clearTimeout(timer); cancelAnimationFrame(raf); const c=live; live=null; busy=false; $('mic').disabled=false; ui(false); pulse();
+  if(c&&!fromServer){ try{ await c.endSession(); }catch(e){} }
+  if(failed) setStatus('الاتصال اتقطع. جرّب تاني.','The connection dropped. Please try again.');
+  else setStatus('برافو عليك! ارجع بكرة لحرف جديد.','Well done! Come back tomorrow for a new letter.');
+}
+$('mic').onclick=()=>{ if(live) stop(); else start(); };
+let saved=null; try{saved=localStorage.getItem('lumentor-lang')}catch(e){} setLang(saved||'ar');
+
+</script>
+</body>
+</html>
