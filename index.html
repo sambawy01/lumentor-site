@@ -36,7 +36,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 .navlinks{display:flex;gap:26px;align-items:center;font-weight:600;font-size:18px}
 .navlinks a{text-decoration:none}
 .navlinks a:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:3px}
-.lang{border:3px solid var(--line);background:var(--ink);color:var(--paper);font:700 17px "IBM Plex Sans Arabic";padding:6px 16px;border-radius:99px;cursor:pointer}
+.lang{-webkit-appearance:none;border:3px solid var(--line);background:var(--ink);color:var(--paper);font:700 17px "IBM Plex Sans Arabic";padding:6px 16px;border-radius:99px;cursor:pointer}
 @media(max-width:820px){.navlinks a{display:none}}
 
 /* buttons */
@@ -45,6 +45,9 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--line)}
 .btn.primary{background:var(--orange);color:#fff}
 .btn.light{background:var(--paper);color:var(--ink)}
+.btn.talk{background:var(--teal);color:#fff}
+.btn.talk.on{background:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 
 /* hero */
 .hero{padding:64px 0 40px;overflow:hidden}
@@ -76,9 +79,9 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 .rwrap{position:relative;width:100%;aspect-ratio:1}
 .rstage{position:absolute;left:0;top:0;width:560px;height:560px;transform-origin:0 0}
 .r-egg{position:absolute;top:250px;left:130px;width:300px;height:230px;background:radial-gradient(ellipse at 32% 22%,#fff 0%,#f3f6fa 30%,#d6dde8 70%,#aeb9ca 100%);border-radius:50% 50% 46% 46%/42% 42% 58% 58%;box-shadow:inset -14px -18px 30px #7f90ab66,inset 10px 10px 24px #ffffffaa,0 14px 30px #0007}
-.r-head{position:absolute;top:58px;left:80px;width:400px;height:220px;display:flex;align-items:center;justify-content:center;gap:12px;background:radial-gradient(ellipse at 35% 20%,#fff,#e4e9f1 60%,#b8c2d3);border-radius:50% 50% 44% 44%/56% 56% 44% 44%;box-shadow:inset -12px -16px 26px #7f90ab55,0 10px 24px #0006;transform-origin:50% 100%;z-index:3}
+.r-head{position:absolute;top:70px;left:105px;width:350px;height:215px;display:flex;align-items:center;justify-content:center;gap:12px;background:radial-gradient(ellipse at 35% 20%,#fff,#e4e9f1 60%,#b8c2d3);border-radius:50% 50% 44% 44%/56% 56% 44% 44%;box-shadow:inset -12px -16px 26px #7f90ab55,0 10px 24px #0006;transform-origin:50% 100%;z-index:3}
 .r-visor{display:flex;gap:10px;padding:14px 18px;background:linear-gradient(#0a0d14,#000);border-radius:70px;border:2px solid #1b2433}
-.r-visor canvas{width:140px;height:140px;border-radius:50%;background:#000;display:block}
+.r-visor canvas{width:128px;height:128px;border-radius:50%;background:#000;display:block}
 .r-neck{position:absolute;top:262px;left:225px;width:110px;height:26px;border-radius:12px;background:#2a2f3a;z-index:2}
 .r-pill{position:absolute;top:330px;left:258px;width:44px;height:14px;border-radius:7px;background:#38bdf8;box-shadow:0 0 12px #38bdf8;z-index:2}
 .r-wing{position:absolute;top:300px;width:46px;height:110px;background:linear-gradient(#ffffff,#c4cddb);border-radius:30px 30px 50px 50px;box-shadow:0 4px 12px #0006;z-index:1}
@@ -115,7 +118,7 @@ h2{font-size:clamp(40px,5vw,68px);font-weight:800;margin-bottom:22px}
 .demo-owl img{width:100%;max-width:300px;margin:auto;transition:transform .25s}
 .demo-owl .mood{margin-top:12px;font-weight:700;font-size:18px;color:var(--purple)}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
-.chip{border:3px solid var(--line);background:var(--paper);border-radius:99px;padding:8px 18px;font:600 17px "IBM Plex Sans Arabic";cursor:pointer}
+.chip{-webkit-appearance:none;border:3px solid var(--line);background:var(--paper);color:var(--ink);border-radius:99px;padding:8px 18px;font:600 17px "IBM Plex Sans Arabic";cursor:pointer}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .chatbox{background:var(--cream);border:4px solid var(--line);border-radius:28px;padding:22px;min-height:520px;display:flex;flex-direction:column;gap:14px;box-shadow:8px 8px 0 var(--line)}
 .chathead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;font-size:17px;border-bottom:3px dashed var(--line);padding-bottom:12px}
@@ -136,7 +139,9 @@ h2{font-size:clamp(40px,5vw,68px);font-weight:800;margin-bottom:22px}
 .points{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
 .point{background:var(--cream);border:3px solid var(--line);border-radius:var(--r);padding:22px}
 .point b{display:block;font-family:"Baloo Bhaijaan 2";font-size:26px;margin-bottom:6px}
-@media(max-width:900px){.demo{grid-template-columns:1fr}.demo-owl{position:static}.demo-owl img{max-width:200px}.points{grid-template-columns:1fr}.chatbox{min-height:440px}}
+@media(max-width:900px){.demo{grid-template-columns:1fr;gap:20px}.demo-owl{position:static}.demo-owl .frame{width:72%;margin:auto}.points{grid-template-columns:1fr}.chatbox{min-height:0;height:380px}}
+#chat{overflow-y:auto;scroll-behavior:smooth;flex:1;padding:4px}
+.chatbox{max-height:620px}
 
 /* robot */
 #robot{background:var(--purple);color:#fff}
@@ -268,11 +273,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="chips" role="group" aria-label="Curriculum" id="chips"></div>
         <div class="chatbox" aria-live="polite">
           <div class="chathead"><span id="lessonTitle"></span><span class="xp" id="xp">⭐ 120 XP</span></div>
-          <div id="chat" style="display:flex;flex-direction:column;gap:14px"></div>
+          <div id="chat" style="display:flex;flex-direction:column;gap:14px;min-height:0"></div>
         </div>
         <div class="democtl">
           <button class="btn primary" id="play"><span class="en">▶ Play lesson</span><span class="ar">▶ شغّل الدرس</span></button>
           <button class="btn light" id="sound" aria-pressed="false"><span class="en">🔈 Sound off</span><span class="ar">🔈 الصوت مغلق</span></button>
+          <button class="btn talk" id="talk"><span class="en">🎙️ Talk to Nuri live</span><span class="ar">🎙️ كلّم نوري مباشرة</span></button>
+          <p id="liveStatus" style="font-size:17px;font-weight:600;color:var(--purple);flex-basis:100%;min-height:1em"><span class="en"></span><span class="ar"></span></p>
+          <p style="font-size:16px;color:var(--ink2);flex-basis:100%"><span class="en">Live talk is a 2‑minute demo for parents, schools and partners. It uses your microphone; nothing is recorded. Please don't share personal details.</span><span class="ar">المحادثة المباشرة عرض مدته دقيقتان لأولياء الأمور والمدارس والشركاء. تستخدم الميكروفون ولا يتم تسجيل أي شيء. من فضلك لا تشارك بيانات شخصية.</span></p>
         </div>
       </div>
     </div>
@@ -471,12 +479,13 @@ const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 const EYE={idle:'idle',talking:'speaking',thinking:'thinking',encouraging:'encouraging',excited:'proud',celebrating:'celebrating',listening:'listening'};
-const GEST={thinking:{cue:'head_tilt',side:'right'},encouraging:{cue:'nod'},excited:{cue:'wing_flap',repeat:1},celebrating:{cue:'pose_celebrate'}};
+const GEST={encouraging:{cue:'nod'},excited:{cue:'wing_flap',repeat:1},celebrating:{cue:'wing_flap',repeat:2}};
 let owl=null, body=null;
 try{ const cfg=JSON.parse(document.getElementById('owlcfg').textContent); const P=window.NuriOwlPreview;
   owl=new P.OwlRenderer($('eyeL'),$('eyeR'),cfg); body=new P.OwlBody({head:$('rhead'),wl:$('wl'),wr:$('wr'),fl:$('fl'),fr:$('fr')}); }catch(e){console.warn(e)}
 function fit(){ const w=$('rwrap').clientWidth; $('rstage').style.transform=`scale(${w/560})`; }
 addEventListener('resize',fit); fit();
+new MutationObserver(()=>{const h=$('rhead'); const m=/translateY\(([-\d.]+)px\)/.exec(h.style.transform); const t=m?`translateY(${m[1]}px)`:''; if(h.style.transform!==t) h.style.transform=t;}).observe($('rhead'),{attributes:true,attributeFilter:['style']});
 function setOwl(m){ $('mood').textContent=MOODS[lang][m]||''; if(!owl) return; owl.setState(EYE[m]||'idle',1,250, m==='celebrating'?6000:0); if(GEST[m]) body.post(GEST[m]); }
 function chips(){
   const c=$('chips'); c.innerHTML='';
@@ -484,36 +493,80 @@ function chips(){
     b.onclick=()=>{cur=i;chips();play();}; c.appendChild(b); });
 }
 function reset(){ $('chat').innerHTML=''; xp=120; $('xp').textContent='⭐ '+xp+' XP'; $('lessonTitle').textContent=LESSONS[lang][cur].title; setOwl('idle'); }
-function speak(t){ return new Promise(res=>{ if(!sound||!('speechSynthesis' in window)) return res();
-  const u=new SpeechSynthesisUtterance(t); u.lang= lang==='ar'?'ar-EG':'en-GB'; u.rate=lang==='ar'?0.95:1; u.pitch=1.25;
-  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith(lang==='ar'?'ar':'en')); if(v) u.voice=v;
-  u.onend=res; u.onerror=res; speechSynthesis.speak(u); setTimeout(res, 9000); }); }
+const aud=new Audio(); aud.preload='auto';
+function clip(path){ return new Promise(res=>{ if(!sound) return res(); let done=false; const fin=()=>{ if(!done){done=true; res();} };
+  aud.onended=fin; aud.onerror=fin; aud.src=path; const pr=aud.play(); if(pr&&pr.catch) pr.catch(fin); setTimeout(fin,12000); }); }
+function stopAudio(){ try{ aud.pause(); }catch(e){} }
+function unlockAudio(){ try{ aud.muted=true; aud.src=`assets/voice/${lang}-${LESSONS[lang][cur].id}-0.mp3`; const p=aud.play(); const done=()=>{aud.pause(); aud.currentTime=0; aud.muted=false;}; if(p&&p.then) p.then(done).catch(()=>{aud.muted=false}); else done(); }catch(e){} }
 async function play(){
-  const my=++run; if('speechSynthesis' in window) speechSynthesis.cancel(); reset();
-  const L=LESSONS[lang][cur], who={en:['Nuri','Layla, 7'],ar:['نوري','ليلى، ٧ سنوات']}[lang];
+  const my=++run; stopAudio(); if(live) return; reset();
+  const L=LESSONS[lang][cur], who={en:['Nuri','Layla, 7'],ar:['نوري','ليلى، ٧ سنوات']}[lang]; let k=0;
   for(const [s,mood,text,gain] of L.lines){
     if(my!==run) return;
     const chat=$('chat');
-    if(s==='n'){ setOwl('thinking'); const t=document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>'; chat.appendChild(t); await sleep(900); if(my!==run) return; t.remove(); setOwl(mood); }
+    if(s==='n'){ setOwl('thinking'); const t=document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>'; chat.appendChild(t); chat.scrollTop=chat.scrollHeight; await sleep(800); if(my!==run) return; t.remove(); setOwl(mood); }
     else { setOwl('listening'); await sleep(900); }
-    const m=document.createElement('div'); m.className='msg '+(s==='n'?'nuri':'kid'); m.innerHTML=`<span class="who">${s==='n'?who[0]:who[1]}</span>`; m.append(text); chat.appendChild(m);
+    addMsg(s==='n'?'nuri':'kid', s==='n'?who[0]:who[1], text);
     if(gain){ xp+=gain; $('xp').textContent='⭐ '+xp+' XP'; $('xp').classList.add('pop'); setTimeout(()=>$('xp').classList.remove('pop'),300);
-      const n=document.createElement('div'); n.className='msg note'; n.textContent= lang==='ar'?`+${gain} نجمة · النجوم تزيد ولا تنقص أبداً`:`+${gain} XP · stars only ever go up`; chat.appendChild(n); }
-    if(s==='n' && sound) await speak(text); else await sleep(s==='n'?1500:900);
+      const n=document.createElement('div'); n.className='msg note'; n.textContent= lang==='ar'?`+${gain} نجمة · النجوم تزيد ولا تنقص أبداً`:`+${gain} XP · stars only ever go up`; chat.appendChild(n); chat.scrollTop=chat.scrollHeight; }
+    if(s==='n'){ const path=`assets/voice/${lang}-${L.id}-${k++}.mp3`; if(sound){ if(owl) owl.setState('speaking',1,200); await clip(path); if(my!==run) return; if(owl) owl.setState(EYE[mood]||'idle',1,250); await sleep(300);} else await sleep(1600); }
+    else await sleep(900);
   }
 }
-$('play').onclick=play;
-$('sound').onclick=()=>{ sound=!sound; $('sound').setAttribute('aria-pressed',sound);
+function addMsg(cls, who, text){ const chat=$('chat'); const m=document.createElement('div'); m.className='msg '+cls; m.innerHTML=`<span class="who"></span>`; m.firstChild.textContent=who; m.append(text); chat.appendChild(m); chat.scrollTop=chat.scrollHeight; return m; }
+$('play').onclick=()=>{ if(live) return; if(sound) unlockAudio(); play(); };
+function setSoundLabel(){ $('sound').setAttribute('aria-pressed',sound);
   $('sound').querySelector('.en').textContent= sound?'🔊 Sound on':'🔈 Sound off';
-  $('sound').querySelector('.ar').textContent= sound?'🔊 الصوت يعمل':'🔈 الصوت مغلق';
-  if(sound) play(); else if('speechSynthesis' in window) speechSynthesis.cancel(); };
-function setLang(l){ lang=l; document.body.classList.toggle('ar',l==='ar'); document.documentElement.lang=l; document.documentElement.dir= l==='ar'?'rtl':'ltr';
+  $('sound').querySelector('.ar').textContent= sound?'🔊 الصوت يعمل':'🔈 الصوت مغلق'; }
+$('sound').onclick=()=>{ sound=!sound; setSoundLabel(); if(sound){ unlockAudio(); setTimeout(play,400);} else stopAudio(); };
+
+/* ---------- Live talk with Nuri (ElevenLabs voice agent) ---------- */
+const AGENT_ID='agent_9901m6qz4s8qe1dtkazyh063jwx5';
+let live=null, liveTimer=null;
+function liveUI(on, statusEn, statusAr){
+  $('talk').querySelector('.en').textContent= on?'■ End conversation':'🎙️ Talk to Nuri live';
+  $('talk').querySelector('.ar').textContent= on?'■ إنهاء المحادثة':'🎙️ كلّم نوري مباشرة';
+  $('talk').classList.toggle('on',on);
+  $('liveStatus').querySelector('.en').textContent=statusEn||''; $('liveStatus').querySelector('.ar').textContent=statusAr||'';
+  ['play','sound'].forEach(id=>$(id).disabled=on); document.querySelectorAll('.chip').forEach(c=>c.disabled=on);
+}
+async function startLive(){
+  run++; stopAudio(); liveUI(true,'Connecting… allow the microphone.','جارٍ الاتصال… اسمح باستخدام الميكروفون.'); setOwl('thinking');
+  try{
+    await navigator.mediaDevices.getUserMedia({audio:true});
+    const { Conversation } = await import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.35.0/+esm');
+    $('chat').innerHTML=''; $('lessonTitle').textContent= lang==='ar'?'محادثة مباشرة مع نوري':'Live conversation with Nuri';
+    live = await Conversation.startSession({
+      agentId: AGENT_ID, connectionType:'webrtc',
+      overrides:{ agent:{ language: lang } },
+      onConnect:()=>{ liveUI(true,'Connected. Say hello! (2 minutes max)','متصل. قول أهلاً! (دقيقتان كحد أقصى)'); if(body) body.post({cue:'wing_flap',repeat:2}); },
+      onModeChange:({mode})=>{ if(!owl) return; if(mode==='speaking'){ owl.setState('speaking',1,150); $('mood').textContent=MOODS[lang].talking; } else { owl.setState('listening',1,150); $('mood').textContent=MOODS[lang].listening; } },
+      onMessage:({source,message})=>{ if(!message) return; addMsg(source==='ai'?'nuri':'kid', source==='ai'?(lang==='ar'?'نوري':'Nuri'):(lang==='ar'?'أنت':'You'), message); },
+      onDisconnect:()=>endLive(true),
+      onError:(e)=>{ console.warn(e); }
+    });
+    liveTimer=setTimeout(()=>endLive(), 125000);
+  }catch(e){
+    console.warn(e); live=null;
+    const denied = e && (e.name==='NotAllowedError' || e.name==='SecurityError');
+    liveUI(false, denied?'Microphone blocked. Allow it in your browser settings and try again.':'Nuri is busy right now. Please try again in a minute.',
+                   denied?'الميكروفون مقفول. اسمح به من إعدادات المتصفح وحاول تاني.':'نوري مشغول دلوقتي. حاول تاني بعد دقيقة.');
+    setOwl('idle');
+  }
+}
+async function endLive(fromServer){
+  clearTimeout(liveTimer); const c=live; live=null;
+  if(c && !fromServer){ try{ await c.endSession(); }catch(e){} }
+  liveUI(false,'Thanks for talking with Nuri!','شكراً إنك كلّمت نوري!'); if(owl) owl.setState('celebrating',1,250,4000);
+}
+$('talk').onclick=()=>{ if(live) endLive(); else startLive(); };
+function setLang(l){ if(live) endLive(); lang=l; document.body.classList.toggle('ar',l==='ar'); document.documentElement.lang=l; document.documentElement.dir= l==='ar'?'rtl':'ltr';
   $('langBtn').textContent= l==='ar'?'English':'عربي'; cur=0; chips(); run++; reset(); if(started) play();
   try{localStorage.setItem('lumentor-lang',l)}catch(e){} }
 $('langBtn').onclick=()=>setLang(lang==='en'?'ar':'en');
 let saved='en'; try{saved=localStorage.getItem('lumentor-lang')||(navigator.language||'').startsWith('ar')&&'ar'||'en'}catch(e){}
 setLang(saved);
-new IntersectionObserver((e,o)=>{ if(e[0].isIntersecting){ started=true; play(); o.disconnect(); } },{threshold:.35}).observe($('demo'));
+new IntersectionObserver((e,o)=>{ if(e.some(x=>x.isIntersecting)){ started=true; play(); o.disconnect(); } },{threshold:.3}).observe($('rwrap'));
 </script>
 </body>
 </html>
